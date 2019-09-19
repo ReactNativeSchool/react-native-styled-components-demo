@@ -1,6 +1,7 @@
-import React from "react";
-import { View } from "react-native";
+import styled from "styled-components/native";
 
-export default ({ children }) => (
-  <View style={{ flexDirection: "row" }}>{children}</View>
-);
+const Row = styled.View`
+  flex-direction: row;
+`;
+
+export default Row;

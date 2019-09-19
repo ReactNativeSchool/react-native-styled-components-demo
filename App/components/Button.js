@@ -1,58 +1,47 @@
 import React from "react";
-import { TouchableOpacity, StyleSheet, Text, Dimensions } from "react-native";
+import { Dimensions } from "react-native";
+import styled from "styled-components/native";
 
 const screen = Dimensions.get("window");
 const buttonWidth = screen.width / 4;
 
-const styles = StyleSheet.create({
-  text: {
-    color: "#fff",
-    fontSize: 25
-  },
-  textSecondary: {
-    color: "#060606"
-  },
-  button: {
-    backgroundColor: "#333333",
-    flex: 1,
-    height: Math.floor(buttonWidth - 10),
-    alignItems: "center",
-    justifyContent: "center",
-    borderRadius: Math.floor(buttonWidth),
-    margin: 5
-  },
-  buttonDouble: {
-    width: screen.width / 2 - 10,
-    flex: 0,
-    alignItems: "flex-start",
-    paddingLeft: 40
-  },
-  buttonSecondary: {
-    backgroundColor: "#a6a6a6"
-  },
-  buttonAccent: {
-    backgroundColor: "#f09a36"
-  }
-});
+const ButtonText = styled.Text`
+  color: ${props => (props.theme === "secondary" ? "#060606" : "#fff")};
+  font-size: 25;
+`;
 
-export default ({ onPress, text, size, theme }) => {
-  const buttonStyles = [styles.button];
-  const textStyles = [styles.text];
+const Button = styled.TouchableOpacity`
+  background-color: ${props => {
+    switch (props.theme) {
+      case "secondary":
+        return "#a6a6a6";
+      case "accent":
+        return "#f09a36";
+      default:
+        return "#333333";
+    }
+  }};
+  flex: 1;
+  height: ${Math.floor(buttonWidth - 10)};
+  align-items: center;
+  justify-content: center;
+  border-radius: ${Math.floor(buttonWidth)};
+  margin: 5px;
+`;
 
-  if (size === "double") {
-    buttonStyles.push(styles.buttonDouble);
-  }
+const ButtonDouble = styled(Button)`
+  width: ${screen.width / 2 - 10};
+  flex-shrink: 0;
+  align-items: flex-start;
+  padding-left: 40;
+`;
 
-  if (theme === "secondary") {
-    buttonStyles.push(styles.buttonSecondary);
-    textStyles.push(styles.textSecondary);
-  } else if (theme === "accent") {
-    buttonStyles.push(styles.buttonAccent);
-  }
+export default ({ text, onPress, size, theme }) => {
+  const ButtonComp = size === "double" ? ButtonDouble : Button;
 
   return (
-    <TouchableOpacity onPress={onPress} style={buttonStyles}>
-      <Text style={textStyles}>{text}</Text>
-    </TouchableOpacity>
+    <ButtonComp onPress={onPress} size={size} theme={theme}>
+      <ButtonText theme={theme}>{text}</ButtonText>
+    </ButtonComp>
   );
 };

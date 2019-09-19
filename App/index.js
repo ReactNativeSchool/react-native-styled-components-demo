@@ -1,24 +1,24 @@
 import React from "react";
-import { StyleSheet, Text, View, StatusBar, SafeAreaView } from "react-native";
+import { StatusBar, SafeAreaView } from "react-native";
+import styled from "styled-components/native";
 
 import Row from "./components/Row";
 import Button from "./components/Button";
 import calculator, { initialState } from "./util/calculator";
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#202020",
-    justifyContent: "flex-end"
-  },
-  value: {
-    color: "#fff",
-    fontSize: 40,
-    textAlign: "right",
-    marginRight: 20,
-    marginBottom: 10
-  }
-});
+const Container = styled.View`
+  flex: 1;
+  background-color: #202020;
+  justify-content: flex-end;
+`;
+
+const ValueText = styled.Text`
+  color: #fff;
+  font-size: 40;
+  text-align: right;
+  margin-right: 20;
+  margin-bottom: 10;
+`;
 
 export default class App extends React.Component {
   state = initialState;
@@ -29,12 +29,12 @@ export default class App extends React.Component {
 
   render() {
     return (
-      <View style={styles.container}>
+      <Container>
         <StatusBar barStyle="light-content" />
         <SafeAreaView>
-          <Text style={styles.value}>
+          <ValueText>
             {parseFloat(this.state.currentValue).toLocaleString()}
-          </Text>
+          </ValueText>
           <Row>
             <Button
               text="C"
@@ -105,7 +105,7 @@ export default class App extends React.Component {
             />
           </Row>
         </SafeAreaView>
-      </View>
+      </Container>
     );
   }
 }
